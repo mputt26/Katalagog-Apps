@@ -59,19 +59,34 @@ class FoodCard extends StatelessWidget {
       margin: EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[
-          Image.network(
-            foodItem.image,
-            height: 120,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          Container(
+            child: Image.network(
+              foodItem.image,
+              height: 110,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              foodItem.name,
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+            child: Center(
+              child: Column(
+                children: [
+                  Text(
+                    foodItem.name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text('\$${foodItem.price}',
+                          style: TextStyle(fontSize: 14.0, color: Colors.grey))
+                    ],
+                  )
+                ],
               ),
             ),
           ),

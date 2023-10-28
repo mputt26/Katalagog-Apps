@@ -1,0 +1,89 @@
+import 'package:flutter/material.dart';
+import 'package:menu_resto/data/api_service.dart';
+
+class DrinkDetailPage extends StatefulWidget {
+  @override
+  _DrinkDetailPageState createState() => _DrinkDetailPageState();
+}
+
+class _DrinkDetailPageState extends State<DrinkDetailPage> {
+  late List<DrinkItem> drinkItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchDrinkItems();
+  }
+
+  Future<void> _fetchDrinkItems() async {
+    ApiService apiService = ApiService();
+    try {
+      List<DrinkItem> items = await apiService.fetchDrinkItems();
+      setState(() {
+        drinkItems = items;
+      });
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Drink Detail'),
+      ),
+      body: drinkItems.isNotEmpty
+          ? GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemCount: drinkItems.length,
+              itemBuilder: (context, index) {
+                return DrinkCard(drinkItem: drinkItems[index]);
+              },
+            )
+          : Center(child: CircularProgressIndicator()),
+    );
+  }
+}
+
+class DrinkCard extends StatelessWidget {
+  final DrinkItem drinkItem;
+
+  DrinkCard({required this.drinkItem});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          Image.network(
+            drinkItem.image,
+            height: 120,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              drinkItem.name,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Text(
+            '\$${drinkItem.price}',
+            style: TextStyle(
+              fontSize: 14.0,
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

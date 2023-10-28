@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menu_resto/pages/opening_page.dart';
 
-
 void main() {
   runApp(const MyApp());
 }

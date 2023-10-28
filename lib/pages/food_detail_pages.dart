@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:menu_resto/data/api_service.dart';
+
+class FoodDetailPage extends StatefulWidget {
+  @override
+  _FoodDetailPageState createState() => _FoodDetailPageState();
+}
+
+class _FoodDetailPageState extends State<FoodDetailPage> {
+  late List<FoodItem> foodItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchFoodItems();
+  }
+
+  Future<void> _fetchFoodItems() async {
+    ApiService apiService = ApiService();
+    try {
+      List<FoodItem> items = await apiService.fetchFoodItems();
+      setState(() {
+        foodItems = items;
+      });
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Food Detail'),
+      ),
+      body: foodItems.isNotEmpty
+          ? GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemCount: foodItems.length,
+              itemBuilder: (context, index) {
+                return FoodCard(foodItem: foodItems[index]);
+              },
+            )
+          : Center(child: CircularProgressIndicator()),
+    );
+  }
+}
+
+class FoodCard extends StatelessWidget {
+  final FoodItem foodItem;
+
+  FoodCard({required this.foodItem});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          Image.network(
+            foodItem.image,
+            height: 120,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              foodItem.name,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:menu_resto/pages/home_page.dart';
 import 'package:menu_resto/style.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -102,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget submitLogin() {
     return ElevatedButton(
       onPressed: () {
+        print('terserah');
         inputCheck();
       },
       style: submitStyle,
@@ -113,10 +113,13 @@ class _LoginPageState extends State<LoginPage> {
     bool isAllowed = false;
     if (username.text.isNotEmpty && password.text.isNotEmpty) {
       isAllowed = true;
+      print('terserah1');
       Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => HomePage(name : username.text)));
-    }
-    if (!isAllowed) {
+          context,
+          MaterialPageRoute(
+              builder: (builder) => HomePage(name: username.text)));
+    } else {
+      print('terserah2');
       showDialog(
           context: context,
           builder: ((context) => AlertDialog(

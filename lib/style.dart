@@ -39,3 +39,35 @@ ButtonStyle submitStyle = ElevatedButton.styleFrom(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
     ));
+
+class AppStyles {
+  static Card customCard(String categoryTitle) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40),
+      ),
+      child: Container(
+        height: 200,
+        margin: EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: categoryTitle == 'Food'
+                  ? Icon(Icons.fastfood_sharp)
+                  : Icon(Icons.local_drink),
+            ),
+            Text(
+              categoryTitle,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

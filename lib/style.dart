@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 TextStyle defaultW =
     const TextStyle(fontFamily: 'Poppins', color: Colors.white, fontSize: 16);
-TextStyle defaultB =
-    const TextStyle(fontFamily: 'Poppins', color: Colors.black, fontSize: 16);
+TextStyle defaultB = const TextStyle(
+    fontFamily: 'MochiyPopPOne', color: Colors.black, fontSize: 16);
 TextStyle boldBlack = const TextStyle(
     color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17);
 TextStyle boldRed = const TextStyle(

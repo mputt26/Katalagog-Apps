@@ -9,7 +9,13 @@ import 'package:menu_resto/style.dart';
 
 class HomePage extends StatelessWidget {
   final String name;
-  const HomePage({Key? key, required this.name}) : super(key: key);
+  HomePage({Key? key, required this.name}) : super(key: key);
+  final List<String> bannerNow = [
+    'assets/images/rendang.jpeg',
+    'assets/images/snack.jpeg',
+    'assets/images/drink.jpeg',
+    'assets/images/food.jpg',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +42,10 @@ class HomePage extends StatelessWidget {
           children: [
             Text(
               'Selamat Datang',
-              style: defaultW,
+              style: TextStyle(
+                  fontFamily: 'MochiyPopPOne',
+                  color: Colors.green,
+                  fontSize: 16),
             ),
             Text(name),
           ],
@@ -98,7 +107,7 @@ class HomePage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
               ),
               itemBuilder: (BuildContext context, int index, int realIndex) {
-                var items = bannerNow[index + 1];
+                var items = bannerNow[index];
                 return carouselBanner(items);
               },
             ),
@@ -123,7 +132,7 @@ class HomePage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(45),
                 child: Image.asset(
-                  'assets/images/rendang.jpeg',
+                  items,
                   fit: BoxFit.cover,
                 ),
               ),

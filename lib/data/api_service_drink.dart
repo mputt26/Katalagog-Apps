@@ -9,9 +9,10 @@ class ApiServiceDrink {
           await _dio.get('https://653b4f0c2e42fd0d54d4e623.mockapi.io/admin2');
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
+        // print('CHECK API');
         return data
-            .map((item) => DrinkItem(item['name'], item['image'], item['price'],
-                item['description']))
+            .map((item) => DrinkItem(item['name'], item['image'],
+                item['price'].toDouble(), item['description']))
             .toList();
       } else {
         throw Exception('Failed to load drink items');

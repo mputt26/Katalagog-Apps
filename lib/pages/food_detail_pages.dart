@@ -16,7 +16,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
   }
 
   Future<void> _fetchFoodItems() async {
-    ApiService apiService = ApiService();
+    ApiServiceFood apiService = ApiServiceFood();
     try {
       List<FoodItem> items = await apiService.fetchFoodItems();
       setState(() {
@@ -30,7 +30,9 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: AppBar(
+        backgroundColor: Colors.black26,
         title: Text('Food Detail'),
       ),
       body: foodItems.isNotEmpty
@@ -56,6 +58,10 @@ class FoodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(40),
+              bottomRight: Radius.circular(40))),
       margin: EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[

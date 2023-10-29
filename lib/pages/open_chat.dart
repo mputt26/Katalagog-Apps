@@ -25,7 +25,7 @@ class _OpenChatState extends State<OpenChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Food Detail')),
+      appBar: AppBar(title: Text('Savoria Bot')),
       body: Column(
         children: <Widget>[
           Flexible(
@@ -62,8 +62,7 @@ class _OpenChatState extends State<OpenChat> {
             ),
             IconButton(
               icon: Icon(Icons.send),
-              onPressed: () =>
-                  _handleSubmitted('User message'),
+              onPressed: () => _handleSubmitted('User message'),
             ),
           ],
         ),

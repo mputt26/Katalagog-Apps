@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-class ApiService {
+class ApiServiceFood {
   final Dio _dio = Dio();
 
   Future<List<FoodItem>> fetchFoodItems() async {

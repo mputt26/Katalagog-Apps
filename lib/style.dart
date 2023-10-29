@@ -55,8 +55,8 @@ class AppStyles {
           children: [
             Expanded(
               child: categoryTitle == 'Food'
-                  ? Icon(Icons.fastfood_sharp)
-                  : Icon(Icons.local_drink),
+                  ? Icon(Icons.fastfood_sharp, size: 120)
+                  : Icon(Icons.local_drink, size: 120),
             ),
             Text(
               categoryTitle,
@@ -64,6 +64,7 @@ class AppStyles {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

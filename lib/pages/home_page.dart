@@ -4,6 +4,7 @@ import 'package:menu_resto/data/banner_data.dart';
 import 'package:menu_resto/pages/drink_detail.dart';
 import 'package:menu_resto/pages/food_detail_pages.dart';
 import 'package:menu_resto/pages/open_chat.dart';
+import 'package:menu_resto/pages/profile_page.dart';
 import 'package:menu_resto/style.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,6 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: appBarHandler(context),
       body: mainPage(),
       floatingActionButton: msgButton(context),
@@ -20,6 +22,7 @@ class HomePage extends StatelessWidget {
   }
 
   AppBar appBarHandler(BuildContext context) {
+    String firstLetter = name.isNotEmpty ? name[0].toUpperCase() : '';
     return AppBar(
       toolbarHeight: 70,
       automaticallyImplyLeading: false,
@@ -39,6 +42,29 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+      actions: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 15, right: 20),
+            child: InkWell(
+                borderRadius: BorderRadius.circular(22),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(name: name),
+                    ),
+                  );
+                },
+                child: Ink(
+                  child: CircleAvatar(
+                    child: Text(firstLetter),
+                  ),
+                )),
+          ),
+        )
+      ],
     );
   }
 

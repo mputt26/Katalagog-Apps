@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:menu_resto/data/api_service.dart';
+import 'package:menu_resto/data/api_service_drink.dart';
 
 class DrinkDetailPage extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class _DrinkDetailPageState extends State<DrinkDetailPage> {
   }
 
   Future<void> _fetchDrinkItems() async {
-    ApiService apiService = ApiService();
+    ApiServiceDrink apiService = ApiServiceDrink();
     try {
       List<DrinkItem> items = await apiService.fetchDrinkItems();
       setState(() {
@@ -30,7 +30,9 @@ class _DrinkDetailPageState extends State<DrinkDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: AppBar(
+        backgroundColor: Colors.black12,
         title: Text('Drink Detail'),
       ),
       body: drinkItems.isNotEmpty
@@ -56,6 +58,10 @@ class DrinkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(40),
+              bottomRight: Radius.circular(40))),
       margin: EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[

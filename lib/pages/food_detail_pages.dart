@@ -80,6 +80,8 @@ class FoodCard extends StatelessWidget {
                 children: [
                   Text(
                     foodItem.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16.0,
@@ -88,6 +90,7 @@ class FoodCard extends StatelessWidget {
                   ),
                   Column(
                     children: [
+                      SizedBox(height: 15),
                       Text('\$${foodItem.price}',
                           style: TextStyle(fontSize: 14.0, color: Colors.grey))
                     ],

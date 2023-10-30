@@ -25,7 +25,11 @@ class _OpenChatState extends State<OpenChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Savoria Bot')),
+      appBar: AppBar(
+        title: Text('Savoria Bot'),
+        backgroundColor: Color.fromARGB(255, 66, 58, 50),
+        toolbarHeight: 65,
+      ),
       body: Column(
         children: <Widget>[
           Flexible(
@@ -36,36 +40,39 @@ class _OpenChatState extends State<OpenChat> {
               itemBuilder: (_, int index) => messages[index],
             ),
           ),
-          Divider(height: 1.0),
-          Container(
-            decoration: BoxDecoration(color: Theme.of(context).cardColor),
-            child: _buildTextComposer(),
-          ),
+          _buildTextComposer(),
         ],
       ),
     );
   }
 
   Widget _buildTextComposer() {
-    return IconTheme(
-      data: IconThemeData(color: Theme.of(context).disabledColor),
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
-          children: <Widget>[
-            Flexible(
-              child: TextField(
-                onSubmitted: _handleSubmitted,
-                decoration:
-                    InputDecoration.collapsed(hintText: 'Send a message'),
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Container(
+                padding: EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: TextField(
+                  onSubmitted: _handleSubmitted,
+                  decoration:
+                      InputDecoration.collapsed(hintText: 'Send a message'),
+                ),
               ),
             ),
-            IconButton(
-              icon: Icon(Icons.send),
-              onPressed: () => _handleSubmitted('User message'),
-            ),
-          ],
-        ),
+          ),
+          IconButton(
+            icon: Icon(Icons.send),
+            onPressed: () => _handleSubmitted('User message'),
+          ),
+        ],
       ),
     );
   }

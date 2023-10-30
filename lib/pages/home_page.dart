@@ -47,25 +47,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 191, 178, 158),
-
-      appBar: appBarHandler(context),
-      body: Container(
-          // decoration: BoxDecoration(
-          //   gradient: LinearGradient(
-          //     colors: [
-          //       Colors.white,
-          //       Color.fromARGB(255, 250, 196, 58),
-          //       Color.fromARGB(255, 226, 88, 34),
-          //       Color.fromARGB(255, 124, 10, 2),
-          //     ],
-          //     begin: Alignment.topCenter,
-          //     end: Alignment.bottomCenter,
-          //   ),
-          // ),
-          child: mainPage()),
-      // floatingActionButton: msgButton(context),
-    );
+        backgroundColor: Color.fromARGB(255, 191, 178, 158),
+        appBar: appBarHandler(context),
+        body: mainPage()
+        // floatingActionButton: msgButton(context),
+        );
   }
 
   AppBar appBarHandler(BuildContext context) {
@@ -178,7 +164,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           cardCategory(),
-          SizedBox(height: 47),
+          SizedBox(height: 40),
           ChatRekomendasi(),
           SizedBox(height: 15)
         ],
@@ -265,7 +251,7 @@ class _HomePageState extends State<HomePage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          padding: EdgeInsets.symmetric(vertical: 25, horizontal: 130)),
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 130)),
       child: Text('FOOD CHAT',
           style: defaultB.copyWith(fontSize: 20, fontWeight: FontWeight.bold)),
     );

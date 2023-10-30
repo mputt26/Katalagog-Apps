@@ -23,6 +23,7 @@ class _OpeningPageState extends State<OpeningPage> {
             padding: EdgeInsets.only(top: 150, left: 50),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              SizedBox(height: 50),
               Text('Menu Katalog', style: defaultW.copyWith(fontSize: 30)),
               Text('Savoria Resto', style: defaultW.copyWith(fontSize: 45)),
               const SizedBox(height: 10),

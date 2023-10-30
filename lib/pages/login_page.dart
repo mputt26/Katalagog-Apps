@@ -1,19 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:menu_resto/data/api_service_user.dart';
 import 'package:menu_resto/pages/home_page.dart';
-import 'package:menu_resto/style.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool showPassword = true;
-  TextEditingController username = TextEditingController();
-  TextEditingController password = TextEditingController();
-  final GlobalKey<FormState> isValid = GlobalKey<FormState>();
+  final ApiUser apiUser = ApiUser();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  void _login() async {
+    String username = usernameController.text;
+    String password = passwordController.text;
+    bool isValidCredentials = await apiUser.inputCheck(username, password);
+
+    if (isValidCredentials) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage(name: username)),
+      );
+    } else {
+      _showErrorDialog();
+    }
+  }
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Invalid Credentials'),
+          content: Text('Please enter valid username and password.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +64,11 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('LOGIN', style: defaultB.copyWith(fontSize: 40)),
+                  Text('LOGIN',
+                      style: TextStyle(
+                          fontSize: 40,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold)),
                   SizedBox(height: 20),
                   usernameForm(),
                   SizedBox(height: 20),
@@ -41,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-          const Spacer(),
+          Spacer(),
           Container(
               width: double.infinity,
               height: 300,
@@ -57,83 +95,38 @@ class _LoginPageState extends State<LoginPage> {
   Widget usernameForm() {
     return Form(
       child: TextFormField(
-        controller: username,
-        style: defaultW,
+        controller: usernameController,
+        style: TextStyle(color: Colors.white),
         keyboardType: TextInputType.name,
-        decoration: formLoginTheme.copyWith(
+        decoration: InputDecoration(
           labelText: 'Username',
-          prefixIcon: Icon(
-            Icons.account_circle,
-            color: Colors.white,
-          ),
+          labelStyle: TextStyle(color: Colors.white),
+          prefixIcon: Icon(Icons.account_circle, color: Colors.white),
         ),
       ),
     );
   }
 
   Widget passwordForm() {
-    return Form(
-      child: TextFormField(
-        controller: password,
-        obscureText: showPassword,
-        style: defaultW,
-        keyboardType: TextInputType.name,
-        decoration: formLoginTheme.copyWith(
-            labelText: 'Password',
-            prefixIcon: Icon(
-              Icons.lock,
-              color: Colors.white,
-            ),
-            suffixIcon: IconButton(
-                icon: Icon(
-                  showPassword ? Icons.visibility_off : Icons.visibility,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  setState(() {
-                    showPassword = !showPassword;
-                  });
-                })),
-      ),
+    return TextFormField(
+      controller: passwordController,
+      obscureText: true,
+      style: TextStyle(color: Colors.white),
+      keyboardType: TextInputType.name,
+      decoration: InputDecoration(
+          labelText: 'Password',
+          labelStyle: TextStyle(color: Colors.white),
+          prefixIcon: Icon(Icons.lock, color: Colors.white)),
     );
   }
 
   Widget submitLogin() {
     return ElevatedButton(
-      onPressed: () {
-        print('terserah');
-        inputCheck();
-      },
-      style: submitStyle,
-      child: Text('Submit', style: defaultB.copyWith(fontSize: 20)),
+      onPressed: _login,
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20),
+      ),
+      child: Text('Submit'),
     );
-  }
-
-  inputCheck() {
-    bool isAllowed = false;
-    if (username.text.isNotEmpty && password.text.isNotEmpty) {
-      isAllowed = true;
-      print('terserah1');
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (builder) => HomePage(name: username.text)));
-    } else {
-      print('terserah2');
-      showDialog(
-          context: context,
-          builder: ((context) => AlertDialog(
-                title: Text('Error'),
-                content: Text('Pastikan username tidak kosong.'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      'OK',
-                    ),
-                  )
-                ],
-              )));
-    }
   }
 }

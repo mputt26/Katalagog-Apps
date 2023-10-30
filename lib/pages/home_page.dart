@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:menu_resto/data/banner_data.dart';
+import 'package:menu_resto/data/api_service_user.dart';
 import 'package:menu_resto/pages/drink_detail.dart';
 import 'package:menu_resto/pages/food_detail_pages.dart';
 import 'package:menu_resto/pages/open_chat.dart';
 import 'package:menu_resto/pages/profile_page.dart';
 import 'package:menu_resto/style.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final String name;
+
   HomePage({Key? key, required this.name}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final List<String> bannerNow = [
     'assets/images/rendang.jpeg',
     'assets/images/snack.jpeg',
@@ -17,60 +24,115 @@ class HomePage extends StatelessWidget {
     'assets/images/food.jpg',
   ];
 
+  String userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserName('');
+  }
+
+  Future<void> _fetchUserName(String nama) async {
+    try {
+      ApiUser apiUser = ApiUser();
+      String name = await apiUser.getUserName(nama);
+      setState(() {
+        userName = name;
+      });
+    } catch (error) {
+      print('Error fetching user data: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
       appBar: appBarHandler(context),
-      body: mainPage(),
-      floatingActionButton: msgButton(context),
+      body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.white,
+                Color.fromARGB(255, 250, 196, 58),
+                Color.fromARGB(255, 226, 88, 34),
+                Color.fromARGB(255, 124, 10, 2),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: mainPage()),
+      // floatingActionButton: msgButton(context),
     );
   }
 
   AppBar appBarHandler(BuildContext context) {
-    String firstLetter = name.isNotEmpty ? name[0].toUpperCase() : '';
+    String firstLetter =
+        widget.name.isNotEmpty ? widget.name[0].toUpperCase() : '';
     return AppBar(
-      toolbarHeight: 70,
+      backgroundColor: Colors.transparent,
+      shadowColor: Colors.black,
+      toolbarHeight: 150,
       automaticallyImplyLeading: false,
-      backgroundColor: black,
-      scrolledUnderElevation: 0.0,
-      title: Padding(
-        padding: const EdgeInsets.only(left: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Selamat Datang',
-              style: TextStyle(
-                  fontFamily: 'MochiyPopPOne',
-                  color: Colors.green,
-                  fontSize: 16),
-            ),
-            Text(name),
-          ],
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 124, 10, 2),
+              Color.fromARGB(255, 226, 88, 34),
+              Color.fromARGB(255, 241, 188, 49),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Selamat Datang!',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    fontSize: 33,
+                    height: 2.5),
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                widget.name,
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 20),
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
         Align(
           alignment: Alignment.centerRight,
           child: Padding(
-            padding: const EdgeInsets.only(top: 15, right: 20),
+            padding: const EdgeInsets.only(right: 20),
             child: InkWell(
-                borderRadius: BorderRadius.circular(22),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfilePage(name: name),
-                    ),
-                  );
-                },
-                child: Ink(
-                  child: CircleAvatar(
-                    child: Text(firstLetter),
+              borderRadius: BorderRadius.circular(22),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(name: widget.name),
                   ),
-                )),
+                );
+              },
+              child: Ink(
+                child: CircleAvatar(
+                  backgroundColor: const Color.fromARGB(204, 0, 0, 0),
+                  radius: 40,
+                  child: Text(firstLetter,
+                      style:
+                          defaultB.copyWith(fontSize: 35, color: Colors.white)),
+                ),
+              ),
+            ),
           ),
         )
       ],
@@ -82,7 +144,7 @@ class HomePage extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
+            padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
             child: Row(children: [
               Text(
                 'Info dan Promo Special',
@@ -113,6 +175,9 @@ class HomePage extends StatelessWidget {
             ),
           ),
           cardCategory(),
+          SizedBox(height: 47),
+          ChatRekomendasi(),
+          SizedBox(height: 15)
         ],
       ),
     );
@@ -182,9 +247,8 @@ class HomePage extends StatelessWidget {
   }
 
 // ------------------- WIDGET CHAT AI --------------
-  Widget msgButton(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: Colors.blueGrey,
+  Widget ChatRekomendasi() {
+    return ElevatedButton(
       onPressed: () {
         Navigator.push(
           context,
@@ -193,10 +257,13 @@ class HomePage extends StatelessWidget {
           ),
         );
       },
-      child: const Icon(
-        Icons.chat,
-        color: Colors.white,
-      ),
+      style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.amber.shade900,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          padding: EdgeInsets.symmetric(vertical: 25, horizontal: 130)),
+      child: Text('FOOD CHAT', style: defaultW.copyWith(fontSize: 20)),
     );
   }
 }

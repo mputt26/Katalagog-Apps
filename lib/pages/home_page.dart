@@ -47,20 +47,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 191, 178, 158),
+
       appBar: appBarHandler(context),
       body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.white,
-                Color.fromARGB(255, 250, 196, 58),
-                Color.fromARGB(255, 226, 88, 34),
-                Color.fromARGB(255, 124, 10, 2),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
+          // decoration: BoxDecoration(
+          //   gradient: LinearGradient(
+          //     colors: [
+          //       Colors.white,
+          //       Color.fromARGB(255, 250, 196, 58),
+          //       Color.fromARGB(255, 226, 88, 34),
+          //       Color.fromARGB(255, 124, 10, 2),
+          //     ],
+          //     begin: Alignment.topCenter,
+          //     end: Alignment.bottomCenter,
+          //   ),
+          // ),
           child: mainPage()),
       // floatingActionButton: msgButton(context),
     );
@@ -78,9 +80,10 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 124, 10, 2),
-              Color.fromARGB(255, 226, 88, 34),
-              Color.fromARGB(255, 241, 188, 49),
+              Color.fromARGB(255, 66, 58, 50),
+              Color.fromARGB(255, 154, 139, 122),
+              Color.fromARGB(255, 191, 178, 158),
+              Color.fromARGB(255, 214, 199, 174),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -258,12 +261,13 @@ class _HomePageState extends State<HomePage> {
         );
       },
       style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.amber.shade900,
+          backgroundColor: const Color.fromARGB(255, 154, 139, 122),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
           padding: EdgeInsets.symmetric(vertical: 25, horizontal: 130)),
-      child: Text('FOOD CHAT', style: defaultW.copyWith(fontSize: 20)),
+      child: Text('FOOD CHAT',
+          style: defaultB.copyWith(fontSize: 20, fontWeight: FontWeight.bold)),
     );
   }
 }

@@ -30,7 +30,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.red.shade900,
       appBar: AppBar(
         backgroundColor: Colors.black26,
         title: Text('Food Detail'),

@@ -27,26 +27,6 @@ class _HomePageState extends State<HomePage> {
     'assets/images/daging.jpg',
   ];
 
-  String userName = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchUserName('');
-  }
-
-  Future<void> _fetchUserName(String nama) async {
-    try {
-      ApiUser apiUser = ApiUser();
-      String name = await apiUser.getUserName(nama);
-      setState(() {
-        userName = name;
-      });
-    } catch (error) {
-      print('Error fetching user data: $error');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +79,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 SizedBox(height: 5),
                 Text(
-                  'Hallo $userName!',
+                  'Hallo',
                   style: TextStyle(
                     fontSize: 25,
                     color: black,

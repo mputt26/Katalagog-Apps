@@ -33,9 +33,9 @@ class _DrinkDetailPageState extends State<DrinkDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red.shade900,
+      backgroundColor: Colors.orange,
       appBar: AppBar(
-        backgroundColor: Colors.black12,
+        backgroundColor: Colors.orange.shade700,
         title: Text('Drink Detail'),
       ),
       body: drinkItems.isNotEmpty

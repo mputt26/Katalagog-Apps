@@ -72,6 +72,9 @@ fonts:
   - family: MochiyPopPOne
     fonts:
       - asset: assets/fonts/MochiyPopPOne-Regular.ttf
+  - family: Nunito
+    fonts:
+      - asset: assets/fonts/Nunito-Black.ttf
   # - family: Trajan Pro
   #   fonts:
   #     - asset: fonts/TrajanPro.ttf

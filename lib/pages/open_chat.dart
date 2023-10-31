@@ -27,8 +27,7 @@ class _ChatBotState extends State<ChatBot> {
   }
 
   void _askGPT(String question) async {
-    // Ganti dengan kunci API OpenAI yang valid
-    String apiKey = '';
+    String apiKey = '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';
     Dio dio = Dio(BaseOptions(
       baseUrl: 'https://api.openai.com/v1',
       headers: {
@@ -72,7 +71,9 @@ class _ChatBotState extends State<ChatBot> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ChatBot'),
+        backgroundColor: Colors.orange.shade500,
+        toolbarHeight: 70,
+        title: Text('Sava Bot', style: TextStyle(fontSize: 25)),
       ),
       body: Column(
         children: <Widget>[
@@ -90,14 +91,17 @@ class _ChatBotState extends State<ChatBot> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: message.sender == 'User'
-                            ? Colors.blue
-                            : Colors.green,
+                            ? Colors.yellow.shade600
+                            : Colors.orange,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       padding: EdgeInsets.all(10.0),
                       child: Text(
                         message.text,
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
@@ -127,7 +131,7 @@ class _ChatBotState extends State<ChatBot> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send),
+                  icon: Icon(Icons.send, color: Colors.orange.shade400),
                   onPressed: () {
                     _sendMessage(_messageController.text);
                     _messageController.clear();

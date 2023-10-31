@@ -5,6 +5,7 @@ import 'package:menu_resto/pages/drink_detail.dart';
 import 'package:menu_resto/pages/food_detail_pages.dart';
 import 'package:menu_resto/pages/open_chat.dart';
 import 'package:menu_resto/pages/profile_page.dart';
+import 'package:menu_resto/pages/test.dart';
 import 'package:menu_resto/style.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,6 +23,8 @@ class _HomePageState extends State<HomePage> {
     'assets/images/snack.jpeg',
     'assets/images/drink.jpeg',
     'assets/images/food.jpg',
+    'assets/images/kacangmerah.jpg',
+    'assets/images/daging.jpg',
   ];
 
   String userName = '';
@@ -47,7 +50,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 191, 178, 158),
+        backgroundColor: Colors.grey.shade100,
         appBar: appBarHandler(context),
         body: mainPage()
         // floatingActionButton: msgButton(context),
@@ -58,52 +61,22 @@ class _HomePageState extends State<HomePage> {
     String firstLetter =
         widget.name.isNotEmpty ? widget.name[0].toUpperCase() : '';
     return AppBar(
-      backgroundColor: Colors.transparent,
-      shadowColor: Colors.black,
-      toolbarHeight: 150,
-      automaticallyImplyLeading: false,
-      flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 66, 58, 50),
-              Color.fromARGB(255, 154, 139, 122),
-              Color.fromARGB(255, 191, 178, 158),
-              Color.fromARGB(255, 214, 199, 174),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Selamat Datang!',
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                    fontSize: 33,
-                    height: 2.5),
-                textAlign: TextAlign.left,
-              ),
-              Text(
-                widget.name,
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 20),
-              ),
-            ],
-          ),
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(95.0),
+          bottomRight: Radius.circular(95.0),
         ),
       ),
-      actions: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(22),
+      backgroundColor: Colors.white,
+      shadowColor: Colors.black12,
+      toolbarHeight: 135,
+      automaticallyImplyLeading: false,
+      flexibleSpace: Padding(
+        padding: const EdgeInsets.only(top: 60, left: 15, right: 15),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
               onTap: () {
                 Navigator.push(
                   context,
@@ -112,19 +85,40 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: Ink(
-                child: CircleAvatar(
-                  backgroundColor: const Color.fromARGB(204, 0, 0, 0),
-                  radius: 40,
-                  child: Text(firstLetter,
-                      style:
-                          defaultB.copyWith(fontSize: 35, color: Colors.white)),
+              child: CircleAvatar(
+                // backgroundColor: const Color.fromARGB(204, 0, 0, 0),
+                backgroundImage: NetworkImage(
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWh98LAB7aS7ChXk0g3XiP_klmG9x7NOOw24Y4FskQIkU63eilJNV2JdQgOkeg_AIf3O4&usqp=CAU',
                 ),
+                radius: 35,
               ),
             ),
-          ),
-        )
-      ],
+            SizedBox(width: 15), // Jarak antara avatar dan teks
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 5),
+                Text(
+                  'Hallo $userName!',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: black,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Mau makan apa hari ini?',
+                  style: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -136,7 +130,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
             child: Row(children: [
               Text(
-                'Info dan Promo Special',
+                'Promo Special',
                 style: boldBlack.copyWith(fontSize: 21),
               ),
             ]),
@@ -147,7 +141,7 @@ class _HomePageState extends State<HomePage> {
               options: CarouselOptions(
                 height: 250,
                 aspectRatio: 16 / 9,
-                viewportFraction: 0.8,
+                viewportFraction: 0.6,
                 initialPage: 0,
                 enableInfiniteScroll: true,
                 reverse: false,
@@ -181,8 +175,8 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 15),
           Center(
             child: SizedBox(
-              width: 310,
-              height: 170,
+              width: 220,
+              height: 150,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(45),
                 child: Image.asset(
@@ -242,12 +236,12 @@ class _HomePageState extends State<HomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const OpenChat(),
+            builder: (context) => ChatBot(),
           ),
         );
       },
       style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 154, 139, 122),
+          backgroundColor: Color.fromARGB(255, 255, 217, 102),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),

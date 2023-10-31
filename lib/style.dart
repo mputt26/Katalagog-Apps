@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 TextStyle defaultW =
-    const TextStyle(fontFamily: 'Poppins', color: Colors.white, fontSize: 16);
-TextStyle defaultB = const TextStyle(
-    fontFamily: 'MochiyPopPOne', color: Colors.black, fontSize: 16);
+    const TextStyle(fontFamily: 'Nunito', color: Colors.white, fontSize: 16);
+TextStyle defaultB =
+    const TextStyle(fontFamily: 'Nunito', color: Colors.black, fontSize: 25);
+TextStyle defaultB2 = const TextStyle(color: Colors.black, fontSize: 25);
+
 TextStyle boldBlack = const TextStyle(
     color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17);
 TextStyle boldRed = const TextStyle(
@@ -13,7 +15,7 @@ TextStyle boldRed = const TextStyle(
 
 Color red = Color.fromARGB(255, 53, 1, 1);
 Color black = Colors.black;
-Color orange = Color.fromARGB(255, 255, 139, 7);
+Color orange = Color.fromARGB(255, 255, 207, 150);
 Color tosca = Color.fromARGB(255, 36, 99, 107);
 
 InputDecoration formLoginTheme = InputDecoration(
@@ -43,8 +45,9 @@ ButtonStyle submitStyle = ElevatedButton.styleFrom(
 class AppStyles {
   static Card customCard(String categoryTitle) {
     return Card(
+      color: Color.fromARGB(255, 249, 181, 114),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(30),
       ),
       child: Container(
         height: 200,
@@ -55,8 +58,8 @@ class AppStyles {
           children: [
             Expanded(
               child: categoryTitle == 'Food'
-                  ? Icon(Icons.fastfood_sharp, size: 120)
-                  : Icon(Icons.local_drink, size: 120),
+                  ? Image.asset('assets/images/fd.png')
+                  : Image.asset('assets/images/dr.png'),
             ),
             Text(
               categoryTitle,

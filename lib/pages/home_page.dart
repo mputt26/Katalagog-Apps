@@ -5,7 +5,6 @@ import 'package:menu_resto/pages/drink_detail.dart';
 import 'package:menu_resto/pages/food_detail_pages.dart';
 import 'package:menu_resto/pages/open_chat.dart';
 import 'package:menu_resto/pages/profile_page.dart';
-import 'package:menu_resto/pages/test.dart';
 import 'package:menu_resto/style.dart';
 
 class HomePage extends StatefulWidget {

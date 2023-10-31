@@ -14,44 +14,70 @@ class _OpeningPageState extends State<OpeningPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: Color.fromARGB(255, 255, 159, 15),
+      body: Stack(
         children: [
-          Container(
-            padding: EdgeInsets.only(top: 150, left: 50),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(height: 50),
-              Text('Menu Katalog', style: defaultW.copyWith(fontSize: 30)),
-              Text('Savoria Resto', style: defaultW.copyWith(fontSize: 45)),
-              const SizedBox(height: 10),
-              InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()));
-                  },
-                  child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white, width: 1),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Text('Get Started',
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 14)))),
-            ]),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 50, top: 50),
+                  child: Text(
+                    'Savoria',
+                    style: defaultW.copyWith(
+                        fontSize: 45, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 50),
+                  child: Text(
+                    'Resto App',
+                    style: defaultW.copyWith(
+                        fontSize: 45, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                // SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Image.asset(
+                    'assets/images/burger5.png',
+                    height: 450,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
+            ),
           ),
-          const Spacer(),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Image.asset(
-              'assets/images/design.gif',
-              fit: BoxFit.fill,
-              width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 25),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Text(
+                    'Get Started',
+                    style: TextStyle(
+                        color: Colors.orange,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

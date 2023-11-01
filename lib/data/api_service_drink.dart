@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:menu_resto/model/drinkModel.dart';
+
 
 class ApiServiceDrink {
   final Dio _dio = Dio();
@@ -9,10 +11,8 @@ class ApiServiceDrink {
           await _dio.get('https://653b4f0c2e42fd0d54d4e623.mockapi.io/admin2');
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
-        // print('CHECK API');
         return data
-            .map((item) => DrinkItem(item['name'], item['image'],
-                item['price'].toDouble(), item['description']))
+            .map((item) => DrinkItem.fromJson(item))
             .toList();
       } else {
         throw Exception('Failed to load drink items');
@@ -21,13 +21,4 @@ class ApiServiceDrink {
       throw Exception('Error: $e');
     }
   }
-}
-
-class DrinkItem {
-  final String name;
-  final String image;
-  final double price;
-  final String description;
-
-  DrinkItem(this.name, this.image, this.price, this.description);
 }

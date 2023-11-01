@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:menu_resto/pages/login_page.dart';
+import 'package:menu_resto/viewModel/register.dart';
+import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -8,8 +11,14 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    var registerProvider = context.watch<RegisterViewModel>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -34,7 +43,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 15),
                   passwordForm(),
                   SizedBox(height: 15),
-                  submitRegister()
+                  submitRegister(Provider.of<RegisterViewModel>(context))
                 ],
               ),
             ),
@@ -108,21 +117,33 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Widget submitRegister() {
+  Widget submitRegister(RegisterViewModel registerViewModel) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          primary: Colors.orange,
-          textStyle: TextStyle(
-              fontSize: 20, color: Colors.white, fontWeight: FontWeight.w600),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40),
-          ),
-          padding: EdgeInsets.symmetric(vertical: 15),
-        ),
+        onPressed: () async {
+          String name = _nameController.text;
+          String username = _usernameController.text;
+          String password = _passwordController.text;
+
+          try {
+            await registerViewModel.registerUser(name, username, password);
+            // print();
+            //login berhasil 
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+            );
+          } catch (error) {
+            
+            //pesan eror gagal register
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Gagal mendaftar: $error')),
+            );
+          }
+        },
         child: Text('Register'),
+        // ...
       ),
     );
   }

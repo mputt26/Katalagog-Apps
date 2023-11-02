@@ -93,6 +93,7 @@ class _RegisterState extends State<Register> {
         borderRadius: BorderRadius.circular(25),
       ),
       child: Form(
+        key: _formKey,
         child: TextFormField(
           controller: _namaController,
           style: TextStyle(color: const Color.fromARGB(255, 74, 74, 74)),
@@ -178,22 +179,23 @@ class _RegisterState extends State<Register> {
         color: const Color.fromARGB(255, 232, 232, 232),
         borderRadius: BorderRadius.circular(25),
       ),
-      child: TextFormField(
-        controller: _passwordController,
-        obscureText: true,
-        style: TextStyle(color: Colors.black),
-        keyboardType: TextInputType.name,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Data wajib diisi';
-          }
-          return null;
-        },
-        decoration: InputDecoration(
-          labelText: 'Password',
-          labelStyle: TextStyle(color: Colors.grey.shade500),
-          prefixIcon: Icon(Icons.lock_outline, color: Colors.grey.shade500),
-          border: InputBorder.none,
+      child: Form(
+        child: TextFormField(
+          controller: _passwordController,
+          style: TextStyle(color: const Color.fromARGB(255, 74, 74, 74)),
+          keyboardType: TextInputType.name,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Data wajib diisi';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            labelText: 'Password',
+            labelStyle: TextStyle(color: Colors.grey.shade500),
+            prefixIcon: Icon(Icons.key, color: Colors.grey.shade500),
+            border: InputBorder.none,
+          ),
         ),
       ),
     );

@@ -31,4 +31,25 @@ class ApiUser {
     final response = await _dio.get('$baseUrl/user');
     return response.data[0];
   }
+
+  Future<void> updateData(String nama, String username, String email) async {
+    try {
+      Response response = await _dio.put(
+        '$baseUrl/user/1', // Ganti '1' dengan ID pengguna yang ingin Anda perbarui
+        data: {
+          'nama': nama,
+          'username': username,
+          'email': email,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('Data updated successfully');
+      } else {
+        throw Exception('Failed to update data: ${response.statusCode}');
+      }
+    } catch (error) {
+      throw Exception('Error updating data: $error');
+    }
+  }
 }

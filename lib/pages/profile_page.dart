@@ -36,6 +36,70 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+// -------------------------- SHOW EDIT ------------------------------
+  void _showEditDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit Profile'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: _namaController,
+                decoration: InputDecoration(labelText: 'Nama'),
+              ),
+              TextFormField(
+                controller: _usernameController,
+                decoration: InputDecoration(labelText: 'Username'),
+              ),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                _saveData();
+                Navigator.of(context).pop();
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _saveData() async {
+    String nama = _namaController.text;
+    String username = _usernameController.text;
+    String email = _emailController.text;
+
+    try {
+      // memanggil fungsi update data ke mockapi
+      await apiUser.updateData(nama, username, email);
+      // Setelah berhasil disimpan, memperbarui controller
+      setState(() {
+        _namaController.text = nama;
+        _usernameController.text = username;
+        _emailController.text = email;
+      });
+      // Setelah berhasil disimpan
+    } catch (error) {
+      print('Error saving data: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,6 +210,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
+        editButton(),
         logOutButton()
       ],
     );
@@ -170,6 +235,33 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Center(
           child: Text(
             'Log Out',
+            style: defaultB.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 19,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget editButton() {
+    return GestureDetector(
+      onTap: () {
+        _showEditDialog();
+      },
+      child: Container(
+        height: 55,
+        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          color: Colors.blue.shade900,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+          child: Text(
+            'Edit Profil',
             style: defaultB.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 19,

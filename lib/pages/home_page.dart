@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 SizedBox(height: 5),
                 Text(
-                  'Hallo',
+                  'Hallo ${widget.nama}',
                   style: TextStyle(
                     fontSize: 25,
                     color: black,

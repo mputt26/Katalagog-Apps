@@ -12,20 +12,24 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final ApiUser apiUser = ApiUser();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController _namaController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _errorText;
 
   void _login() async {
-    String username = usernameController.text;
-    String password = passwordController.text;
+    String username = _usernameController.text;
+    String password = _passwordController.text;
     bool isValidCredentials = await apiUser.inputCheck(username, password);
 
     if (isValidCredentials) {
+      String nama = _namaController.text;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(name: username)),
+        MaterialPageRoute(builder: (context) => HomePage(nama: nama)),
       );
     } else {
       setState(() {
@@ -89,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
         borderRadius: BorderRadius.circular(25),
       ),
       child: TextFormField(
-        controller: usernameController,
+        controller: _usernameController,
         style: TextStyle(color: const Color.fromARGB(255, 74, 74, 74)),
         keyboardType: TextInputType.name,
         decoration: InputDecoration(
@@ -116,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
         borderRadius: BorderRadius.circular(25),
       ),
       child: TextFormField(
-        controller: passwordController,
+        controller: _passwordController,
         obscureText: true,
         style: TextStyle(color: const Color.fromARGB(255, 74, 74, 74)),
         keyboardType: TextInputType.name,

@@ -8,9 +8,9 @@ import 'package:menu_resto/pages/profile_page.dart';
 import 'package:menu_resto/style.dart';
 
 class HomePage extends StatefulWidget {
-  final String name;
+  final String nama;
 
-  HomePage({Key? key, required this.name}) : super(key: key);
+  HomePage({Key? key, required this.nama}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -37,8 +37,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   AppBar appBarHandler(BuildContext context) {
-    String firstLetter =
-        widget.name.isNotEmpty ? widget.name[0].toUpperCase() : '';
     return AppBar(
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -60,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProfilePage(name: widget.name),
+                    builder: (context) => ProfilePage(nama: widget.nama),
                   ),
                 );
               },

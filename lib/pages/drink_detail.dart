@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:menu_resto/data/api_service_drink.dart';
-import 'package:menu_resto/model/drinkModel.dart';
 
 class DrinkDetailPage extends StatefulWidget {
   @override

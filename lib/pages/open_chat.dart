@@ -27,7 +27,7 @@ class _ChatBotState extends State<ChatBot> {
   }
 
   void _askGPT(String question) async {
-    String apiKey = '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';
+    String apiKey = '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';
     Dio dio = Dio(BaseOptions(
       baseUrl: 'https://api.openai.com/v1',
       headers: {
@@ -91,8 +91,8 @@ class _ChatBotState extends State<ChatBot> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: message.sender == 'User'
-                            ? Colors.yellow.shade600
-                            : Colors.orange,
+                            ? Color.fromARGB(255, 255, 171, 44)
+                            : const Color.fromARGB(255, 219, 131, 0),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       padding: EdgeInsets.all(10.0),

@@ -18,4 +18,17 @@ class ApiUser {
     }
   }
 
+  Future<String> fetchNama() async {
+    try {
+      Map<String, dynamic> userData = await fetchData();
+      return userData['nama'];
+    } catch (error) {
+      throw Exception('Failed to load nama: $error');
+    }
+  }
+
+  Future<Map<String, dynamic>> fetchData() async {
+    final response = await _dio.get('$baseUrl/user');
+    return response.data[0];
+  }
 }

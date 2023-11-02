@@ -4,8 +4,8 @@ import 'package:menu_resto/pages/login_page.dart';
 import 'package:menu_resto/style.dart';
 
 class ProfilePage extends StatefulWidget {
-  final String name;
-  ProfilePage({Key? key, required this.name}) : super(key: key);
+  final String nama;
+  ProfilePage({Key? key, required this.nama}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -13,17 +13,33 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final ApiUser apiUser = ApiUser();
-  TextEditingController _nameController = TextEditingController();
+  TextEditingController _namaController = TextEditingController();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   bool _isLoading = true;
 
   @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      final userData = await apiUser.fetchData();
+      _namaController.text = userData['nama'] ?? '';
+      _emailController.text = userData['email'] ?? '';
+      _usernameController.text = userData['username'] ?? '';
+    } catch (error) {
+      print('Error fetching data: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 191, 178, 158),
+      backgroundColor: Colors.orange,
       body: CustomScrollView(
         physics: const NeverScrollableScrollPhysics(),
         slivers: [
@@ -43,11 +59,29 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           SliverList(
-            delegate: SliverChildListDelegate([
-              accInfo(),
-              settings(),
-            ]),
-          )
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                if (index == 0) {
+                  return accInfo();
+                } else {
+                  return FutureBuilder<Map<String, dynamic>>(
+                    future: apiUser.fetchData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else {
+                        final userData = snapshot.data?.cast<String, dynamic>();
+                        return settings(userData);
+                      }
+                    },
+                  );
+                }
+              },
+              childCount: 2,
+            ),
+          ),
         ],
       ),
     );
@@ -63,110 +97,84 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: Color.fromARGB(255, 96, 83, 63),
+            backgroundImage: NetworkImage(
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWh98LAB7aS7ChXk0g3XiP_klmG9x7NOOw24Y4FskQIkU63eilJNV2JdQgOkeg_AIf3O4&usqp=CAU',
+            ),
             radius: 45,
-            child: Text(widget.name[0].toUpperCase(),
-                style: defaultB.copyWith(fontSize: 50)),
           ),
           const SizedBox(width: 20),
-          Text(widget.name, style: defaultB.copyWith(fontSize: 22))
+          Text(widget.nama, style: defaultB.copyWith(fontSize: 22)),
         ],
       ),
     );
   }
 
-  Widget settings() {
+  Widget settings(Map<String, dynamic>? userData) {
     return Column(
       children: [
         Container(
           margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-              color: Color.fromARGB(255, 139, 125, 103),
-              borderRadius: BorderRadius.circular(20)),
+              color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: Column(
             children: [
               TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(labelText: 'Nama'),
+                initialValue: userData?['nama'] ?? '',
+                enabled: false,
+                decoration: InputDecoration(
+                  labelText: 'Nama',
+                  border: InputBorder.none,
+                ),
               ),
               TextFormField(
-                controller: _usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
+                initialValue: userData?['email'] ?? '',
+                enabled: false,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  border: InputBorder.none,
+                ),
               ),
               TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-                obscureText: true,
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
+                initialValue: userData?['username'] ?? '',
+                enabled: false,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  border: InputBorder.none,
+                ),
               ),
             ],
           ),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-              color: Color.fromARGB(255, 139, 125, 103),
-              borderRadius: BorderRadius.circular(20)),
-          child: Column(
-            children: [
-              listTileMaker(
-                Icons.logout,
-                'Log Out',
-              ),
-            ],
-          ),
-        ),
+        logOutButton()
       ],
     );
   }
 
-  Widget listTileMaker(icon, title, {subtitle, route}) {
-    return ListTile(
-      onTap: () {},
-      leading: Icon(icon, size: 30),
-      title: Text(
-        title,
-        style: defaultB.copyWith(
-            fontWeight: FontWeight.bold, fontSize: 15, color: Colors.black54),
-      ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle,
-              style: defaultB.copyWith(fontSize: 11, color: Colors.black38),
-            )
-          : null,
-      trailing: const Icon(Icons.arrow_forward_ios_rounded),
-    );
-  }
-
   Widget logOutButton() {
-    return Container(
-      height: 55,
-      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => LoginPage()));
-        },
-        borderRadius: BorderRadius.circular(20),
-        splashColor: Colors.red.shade800,
-        child: Ink(
-          decoration: BoxDecoration(
-              color: Colors.red.shade600,
-              borderRadius: BorderRadius.circular(20)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Log Out',
-                  style: defaultB.copyWith(
-                      fontWeight: FontWeight.bold, fontSize: 19))
-            ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      },
+      child: Container(
+        height: 55,
+        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+          child: Text(
+            'Log Out',
+            style: defaultB.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 19,
+              color: Colors.white,
+            ),
           ),
         ),
       ),

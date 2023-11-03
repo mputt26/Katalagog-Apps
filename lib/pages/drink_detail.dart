@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menu_resto/data/api_service_drink.dart';
+import 'package:menu_resto/pages/drink_detail_card.dart';
+import 'package:menu_resto/style.dart';
 
 class DrinkDetailPage extends StatefulWidget {
   @override
@@ -12,18 +14,15 @@ class _DrinkDetailPageState extends State<DrinkDetailPage> {
   @override
   void initState() {
     super.initState();
-    // print('Ini inisial state');
     _fetchDrinkItems();
   }
 
   Future<void> _fetchDrinkItems() async {
     ApiServiceDrink apiService = ApiServiceDrink();
     try {
-      // print('Check API');
       List<DrinkItem> items = await apiService.fetchDrinkItems();
       setState(() {
         drinkItems = items;
-        // print(drinkItems);
       });
     } catch (e) {
       print('Error: $e');
@@ -45,10 +44,55 @@ class _DrinkDetailPageState extends State<DrinkDetailPage> {
               ),
               itemCount: drinkItems.length,
               itemBuilder: (context, index) {
-                return DrinkCard(drinkItem: drinkItems[index]);
+                return GestureDetector(
+                  onTap: () {
+                    _showBottomSheet(context, drinkItems[index]);
+                  },
+                  child: DrinkCard(drinkItem: drinkItems[index]),
+                );
               },
             )
           : Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  void _showBottomSheet(BuildContext context, DrinkItem drinkItem) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 253, 150, 32),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.0),
+              topRight: Radius.circular(16.0),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Image.network(drinkItem.image),
+                SizedBox(height: 10.0),
+                Text(
+                  drinkItem.name,
+                  textAlign: TextAlign.center,
+                  style: defaultB2.copyWith(
+                      fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  drinkItem.description,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 15.0),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -94,6 +138,24 @@ class DrinkCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class DetailImagePage extends StatelessWidget {
+  final String imageUrl;
+
+  DetailImagePage({required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detail Image'),
+      ),
+      body: Center(
+        child: Image.network(imageUrl),
       ),
     );
   }

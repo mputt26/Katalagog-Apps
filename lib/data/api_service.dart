@@ -22,6 +22,7 @@ class FoodProvider extends ChangeNotifier {
               .map((item) => FoodItem(
                     name: item['name'],
                     image: item['image'],
+                    description: item['description'],
                     price: item['price'].toDouble(),
                   ))
               .toList();
@@ -46,7 +47,12 @@ class FoodProvider extends ChangeNotifier {
 class FoodItem {
   final String name;
   final String image;
+  final String description;
   final double price;
 
-  FoodItem({required this.name, required this.image, required this.price});
+  FoodItem(
+      {required this.name,
+      required this.image,
+      required this.price,
+      required this.description});
 }

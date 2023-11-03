@@ -19,6 +19,7 @@ class _RegisterState extends State<Register> {
   late RegisterService _registerService;
 
   @override
+  // inisialisasi variable
   void initState() {
     super.initState();
     _registerService = RegisterService();
@@ -30,7 +31,7 @@ class _RegisterState extends State<Register> {
       String username = _usernameController.text;
       String password = _passwordController.text;
       String email = _emailController.text;
-      print(nama);
+      // print(nama);
 
       try {
         await registerService.registerUser(nama, username, password, email);
